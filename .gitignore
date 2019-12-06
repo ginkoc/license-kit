@@ -1,0 +1,26 @@
+# mvn folders
+###########################
+target
+*.versionsBackup
+
+# build-time files
+###########################
+.metadata
+*.class
+*.swp
+*.iws
+tmp.*
+
+# IDE files
+###########################
+.settings
+.project
+.classpath
+.factorypath
+.externalToolBuilders
+maven-eclipse.xml
+.pmd
+*.ipr
+*.iml
+.idea
+.pydevproject
