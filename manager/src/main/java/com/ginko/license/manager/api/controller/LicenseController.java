@@ -45,7 +45,7 @@ public class LicenseController {
         String ticket;
         try {
             ticket = LicenseHandler.createLicense(licenseDto);
-        } catch (CommandException e) {
+        } catch (Exception e) {
             log.error(String.format("Create license for subject %1$s failed", licenseDto.getSubject()), e);
             throw new UnifiedException(-1, String.format("Create license for subject %1$s failed", licenseDto.getSubject()));
         }
@@ -91,7 +91,7 @@ public class LicenseController {
             dto.setNotBefore(new Date());
         }
 
-        if (dto.getNotBefore().before(dto.getNotAfter())) {
+        if (dto.getNotBefore().after(dto.getNotAfter())) {
             throw new LicenseValidateException("Make sure the begin date is before end date");
         }
 

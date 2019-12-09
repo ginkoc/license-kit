@@ -31,16 +31,10 @@ public class RedisUtil {
      * @param timeoutInSeconds 时间(秒) time要大于0 如果time小于等于0 将设置无限期
      * @return true成功 false失败
      */
-    public static boolean set(String key, Serializable value, long timeoutInSeconds) {
+    public static void set(String key, Serializable value, long timeoutInSeconds) {
         assert key != null;
         assert timeoutInSeconds > 0;
-        try {
-            template.opsForValue().set(key, value, timeoutInSeconds, TimeUnit.SECONDS);
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        template.opsForValue().set(key, value, timeoutInSeconds, TimeUnit.SECONDS);
     }
 
     /**
