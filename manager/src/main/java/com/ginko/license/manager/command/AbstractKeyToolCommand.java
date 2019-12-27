@@ -10,6 +10,7 @@ import java.util.Map;
 
 
 /**
+ * 使用骨架模式，将keytool命令的基本逻辑抽象
  * @author ginko
  * @date 7/21/19
  */
@@ -58,8 +59,8 @@ public abstract class AbstractKeyToolCommand extends BaseCommand implements Exec
     }
 
     /**
-     * return true command
-     * @return command
+     * 获得指定的命令选项
+     * @return 命令选项
      */
     protected abstract String getOption();
 

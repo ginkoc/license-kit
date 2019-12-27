@@ -21,7 +21,7 @@ public abstract class BaseCommand implements Executable {
     }
 
     @Override
-    public void execute() throws CommandException{
+    public void execute() throws CommandException {
         try {
             log.info("Command '{}' begin executing...", getClass().getSimpleName());
             executeCommand();
@@ -55,8 +55,15 @@ public abstract class BaseCommand implements Executable {
         log.info("Command '{}' ending rollback", getClass().getSimpleName());
     }
 
+    /**
+     * 命令执行的实际逻辑
+     */
     protected abstract void executeCommand();
 
+    /**
+     * 命令回滚的实际逻辑
+     * @return 是否回滚成功
+     */
     protected abstract boolean executeRollback();
 
     public Executable getParentCommand() {

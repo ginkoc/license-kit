@@ -48,8 +48,8 @@ public class KeyToolCommandBuilder {
     }
 
     /**
-     * 设置秘钥别名
-     * @param alias key's alias in keystore
+     * 指定keytool命令的秘钥别名参数
+     * @param alias 秘钥在秘钥库中的别名
      * @return this
      */
     public KeyToolCommandBuilder alias(String alias) {
@@ -57,85 +57,146 @@ public class KeyToolCommandBuilder {
         return this;
     }
 
+    /**
+     * 指定keytool命令的签名算法参数
+     * @param sigalg 签名算法
+     * @return this
+     */
     public KeyToolCommandBuilder sigalg(String sigalg) {
         arguments.put(SIGALG, sigalg);
         return this;
     }
 
+    /**
+     * 指定keytool命令的加密算法参数
+     * @param keyalg 加密算法
+     * @return this
+     */
     public KeyToolCommandBuilder keyalg(String keyalg) {
         arguments.put(KEYALG, keyalg);
         return this;
     }
 
+    /**
+     * 指定keytool命令的秘钥大小参数
+     * @param keysize 秘钥大小
+     * @return this
+     */
     public KeyToolCommandBuilder keysize(String keysize) {
         arguments.put(KEYSIZE, keysize);
         return this;
     }
 
-    //设置秘钥有效天数
+    /**
+     * 指定keytool命令的秘钥有效天数参数
+     * @param days 秘钥有效天数
+     * @return this
+     */
     public KeyToolCommandBuilder validity(long days) {
         String validity = String.valueOf(days);
         arguments.put(VALIDITY, validity);
         return this;
     }
 
-    //设置秘钥密码
+    /**
+     * 指定keytool命令的秘钥密码参数
+     * @param keypass 秘钥密码
+     * @return this
+     */
     public KeyToolCommandBuilder keypass(String keypass) {
         arguments.put(KEYPASS, keypass);
         return this;
     }
 
-    //设置公钥/私钥库
+    /**
+     * 指定keytool命令的秘钥库参数
+     * @param keystore 秘钥库
+     * @return this
+     */
     public KeyToolCommandBuilder keystore(String keystore) {
         arguments.put(KEYSTORE, keystore);
         return this;
     }
 
+    /**
+     * 指定keytool命令的秘钥库类型参数
+     * @param storetype 秘钥库类型
+     * @return this
+     */
     public KeyToolCommandBuilder storetype(String storetype) {
         arguments.put(STORE_TYPE, storetype);
         return this;
     }
 
-    //设置公钥/私钥库密码
+    /**
+     * 指定keytool命令的秘钥库密码参数
+     * @param storepass 秘钥库密码
+     * @return this
+     */
     public KeyToolCommandBuilder storepass(String storepass) {
         arguments.put(STOREPASS, storepass);
         return this;
     }
 
-    //设置dname
+    /**
+     * 指定keytool命令的dname参数
+     * @param dname dname
+     * @return this
+     */
     public KeyToolCommandBuilder dname(String dname) {
         arguments.put(DNAME, dname);
         return this;
     }
 
-    //设置文件选项
+    /**
+     * 指定keytool命令的文件名参数
+     * @param file 文件名
+     * @return this
+     */
     public KeyToolCommandBuilder file(String file) {
         arguments.put(FILE, file);
         return this;
     }
 
-    //设置执行命令时不进行询问(非阻塞)
+    /**
+     * 指定执行keytool命令时不进行提示
+     * @return this
+     */
     public KeyToolCommandBuilder noprompt() {
         arguments.put(NOPROMPT, null);
         return this;
     }
 
-    //设置新密码
+    /**
+     * 指定keytool命令的新密码参数
+     * @param newPass 新密码
+     * @return this
+     */
     public KeyToolCommandBuilder newPass(String newPass) {
         arguments.put(NEW, newPass);
         return this;
     }
 
-    //设置默认的加密算法
+    /**
+     * 指定执行keytool命令时使用默认的加密算法
+     * @return this
+     */
     public KeyToolCommandBuilder defaultKeyalg() {
         return keyalg(DEFAULT_KEYALG);
     }
 
-    //设置默认的秘钥大小
+    /**
+     * 指定执行keytool命令时使用默认秘钥大小
+     * @return this
+     */
     public KeyToolCommandBuilder defaultKeysize() {
         return keysize(DEFAULT_KEYSIZE);
     }
 
+    /**
+     * 指定执行keytool命令时使用默认的签名算法
+     * @return this
+     */
     public KeyToolCommandBuilder defaultSigalg() {
         return sigalg(DEFAULT_SIGALG);
     }

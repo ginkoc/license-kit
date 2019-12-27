@@ -23,7 +23,7 @@ public class ThreadPoolConfig {
     private int corePoolSize = Runtime.getRuntime().availableProcessors();
 
     @Bean(name = "scheduledExecutorService")
-    protected ScheduledExecutorService scheduleTaskExuctor() {
+    protected ScheduledExecutorService scheduleTaskExecutor() {
         return new ScheduledThreadPoolExecutor(corePoolSize,
                 new BasicThreadFactory.Builder().namingPattern("schedule-pool-%d").daemon(true).build()){
 

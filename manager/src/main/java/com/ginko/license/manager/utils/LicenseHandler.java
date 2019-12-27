@@ -30,9 +30,21 @@ public class LicenseHandler {
 
     private static final Logger log = LoggerFactory.getLogger(LicenseHandler.class);
 
+    /**
+     * 生成license文件和获得下载license的ticket，ticket有效时间为300s（5分钟）
+     * 当ticket失效1分钟以后定时任务会将license文件删除
+     * @param dto 生成license需要的参数对象
+     * @return 用于下载license的ticket
+     * @throws CommandException 执行生成license命令时出错抛出的异常
+     */
     public static String createLicense(LicenseDto dto) throws CommandException {
         final String ticket = UUID.randomUUID().toString();
 
+        // 封装keytool命令和参数信息，用于生成密钥对，密钥对在生成license时需要用到
+        // 实际执行的命令类似于：
+        // keytool -genkeypair -alias ginko -sigalg SHA1withDSA -keypass abcd1234 -keysize 1024 \
+        // -storepass abcd1234 -keyalg DSA -dname cn=commonName,ou=license,o=ginko,c=CN -validity 156 \
+        // -keystore /home/ginko/.license_manager/ginko.pks -storetype PKCS12
         AbstractKeyToolCommand genKeyCommand = new KeyToolCommandBuilder(KeyToolCommandType.GENERATE_KEYPAIR)
                 .alias(ticket)
                 .defaultKeyalg()
@@ -52,7 +64,7 @@ public class LicenseHandler {
                 new CreateLicenseCommand(genKeyCommand, buildCreateLicenseParams(ticket, dto, licFile));
         createLicenseCommand.execute();
 
-        //设置ticket在redis缓存中的TTL以及缓存失效后多久开始执行定时任务
+        // 设置ticket在redis缓存中的TTL以及缓存失效后多久开始执行定时任务
         cacheTicketAndSetTask(ticket, licFile, 300, 60);
         return ticket;
     }
@@ -108,17 +120,26 @@ public class LicenseHandler {
                 new CreateLicenseParameters(cipher, dto.getSubject(), outputFile, false);
 
         final CustomLicenseContent content = new CustomLicenseContent();
+        // 代表证书的持有者
         content.setHolder(new X500Principal(dto.getHolder()));
+        // 代表证书的主题，可以是一款产品的名字或者软件的代号
         content.setSubject(dto.getSubject());
+        // 目前不清楚代表什么，字面意思为消费类型
         content.setConsumerType(Constants.LICENSE_CONSUMER_TYPE);
+        // 目前不清楚代表什么，字面意思为消费数量
         content.setConsumerAmount(Constants.LICENSE_CONSUMER_AMOUNT);
         String issuer = dto.getIssuer() == null ? Constants.DEFAULT_ISSUER : dto.getIssuer();
+        // 代表证书发行者
         content.setIssuer(new X500Principal(issuer));
         Date date = new Date();
+        // 证书发行日期
         content.setIssued(date);
+        // 证书最早能使用的时间
         content.setNotBefore(date);
+        // 证书过期时间
         content.setNotAfter(dto.getNotAfter());
 
+        // 设置额外的属性
         if (dto.getContents() != null && !dto.getContents().isEmpty()) {
             dto.getContents().forEach(cwv -> {
                 LicenseContentType contentType = LicenseContentType.valueOf(cwv.getType());
@@ -129,6 +150,13 @@ public class LicenseHandler {
         return parameters;
     }
 
+    /**
+     * 将ticket存入redis缓存中，并且在ticket过期后删除license文件
+     * @param ticket 要缓存的票据
+     * @param licFile license文件路径
+     * @param ticketTTL ticket的有效时间
+     * @param delayTime 在ticket过期后延迟删除license的时间
+     */
     private static void cacheTicketAndSetTask(final String ticket,
                                               final String licFile,
                                               long ticketTTL,
@@ -144,6 +172,10 @@ public class LicenseHandler {
                 try {
                     log.info("Deleting private key '{}' on keystore '{}' when ticket expired.",
                             ticket, Constants.STORE_PATH);
+
+                    // 封装keytool命令和参数信息，用于删除秘钥库中的密钥对
+                    // 实际执行的命令类似于：
+                    // keytool -delete -alias ginko -storepass abcd1234 -keystore /home/ginko/.license_manager/ginko.pks
                     AbstractKeyToolCommand deleteCommand = new KeyToolCommandBuilder(KeyToolCommandType.DELETE_KEY)
                             .alias(ticket)
                             .keystore(Constants.STORE_PATH)

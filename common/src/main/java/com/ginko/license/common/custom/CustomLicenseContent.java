@@ -16,6 +16,10 @@ public class CustomLicenseContent extends LicenseContent {
 
     private static final long serialVersionUID = 3394987441801191249L;
 
+    /**
+     * 对除了基本信息以外的控制参数进行封装
+     * 但是key值必须是{@link LicenseContentType}类型
+     */
     private final Map<LicenseContentType, String> contentValueMap = new HashMap<>();
 
     public Optional<String> getContentValue(LicenseContentType key) {

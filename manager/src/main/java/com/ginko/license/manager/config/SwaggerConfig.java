@@ -29,21 +29,27 @@ public class SwaggerConfig {
     public Docket buildDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(buildApiInfo())
-                .useDefaultResponseMessages(false) //不使用默认的HTTP响应码
+                // 不使用默认的HTTP响应码
+                .useDefaultResponseMessages(false)
                 .globalResponseMessage(RequestMethod.GET, buildResponseMessages())
                 .globalResponseMessage(RequestMethod.POST, buildResponseMessages())
-                .forCodeGeneration(true) //将范型表示由'«E,T»'改为'OfEAndT'，因为'«E,T»'不符合RFC3986规范
+                // 将范型表示由'«E,T»'改为'OfEAndT'，因为'«E,T»'不符合RFC3986规范
+                .forCodeGeneration(true)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.ginko.license.manager.api.controller"))//要扫描的API(Controller)基础包
+                // 要扫描的API(Controller)基础包
+                .apis(RequestHandlerSelectors.basePackage("com.ginko.license.manager.api.controller"))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo buildApiInfo() {
         return new ApiInfoBuilder()
-                .title("证书系统")//标题
-                .description("证书系统rest-API接口")//详细描述
-                .version("0.0.1")//版本
+                // 标题
+                .title("证书系统")
+                // 详细描述
+                .description("证书系统rest-API接口")
+                // 版本
+                .version("0.0.1")
                 .build();
     }
 
