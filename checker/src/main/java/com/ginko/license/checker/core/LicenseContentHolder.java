@@ -7,98 +7,118 @@ import de.schlichtherle.license.DefaultCipherParam;
 import de.schlichtherle.license.DefaultLicenseParam;
 import de.schlichtherle.license.LicenseManager;
 import de.schlichtherle.license.LicenseParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.prefs.Preferences;
 
 /**
- * license控制信息的持有对象，需要在系统启动时进行初始化
+ * license控制信息的持有对象，用枚举类实现的单例，需要在系统启动时进行初始化
  * @author ginko
  * @date 8/27/19
  */
-public class LicenseContentHolder {
+public enum LicenseContentHolder {
+    /**
+     *枚举单例对象
+     */
+    INSTANCE;
 
-    private static final LicenseContentHolder INSTANCE = new LicenseContentHolder();
+    private static final Logger log = LoggerFactory.getLogger(LicenseContentHolder.class);
+
     private CustomLicenseContent content;
-
     private String subject;
     private String cipher;
+    private String storePath;
     private File licenseFile;
-    private File storeFile;
-
-    private LicenseContentHolder() {
-        if (INSTANCE != null) {
-            throw new IllegalAccessError();
-        }
-    }
-
-    public static LicenseContentHolder getInstance() {
-        return INSTANCE;
-    }
 
     /**
      * 安装license以获得控制信息
-     * TODO: 2020/1/3  应该抛出异常，在系统启动时若果未安装成功，则启动失败
      */
-    public void install() {
-        assert subject != null;
-        assert cipher != null;
-        assert licenseFile != null;
-        assert storeFile != null;
+    public void install(final String subject,
+                        final String cipher,
+                        final String licensePath,
+                        final String storePath) {
+        validate(subject, cipher, licensePath, storePath);
 
         try {
             LicenseManager lm = new LicenseManager(buildLicenseParam());
             lm.uninstall();
             content = (CustomLicenseContent) lm.install(licenseFile);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Failed to install license due to {}", e.getMessage());
+            log.debug("Exception", e);
+            throw new RuntimeException("Failed to install license due to " + e);
         }
     }
 
     public CustomLicenseContent getContent() {
         if (content == null) {
-            throw new RuntimeException();
+            throw new RuntimeException("Content is null, maybe didn't installed license or installed fail.");
         }
 
         return content;
     }
 
     private LicenseParam buildLicenseParam() {
-        CustomKeyStoreParam storeParam = new CustomKeyStoreParam(storeFile.toString(), cipher, cipher);
+        CustomKeyStoreParam storeParam = new CustomKeyStoreParam(storePath, cipher, cipher);
         Preferences preferences = Preferences.userNodeForPackage(LicenseContentHolder.class);
         CipherParam cipherParam = new DefaultCipherParam(cipher);
         return new DefaultLicenseParam(subject, preferences, storeParam, cipherParam);
+    }
+
+    private void validate(final String subject,
+                          final String cipher,
+                          final String licensePath,
+                          final String storePath) {
+        if (subject != null) {
+            this.subject = subject;
+        } else {
+            throw new RuntimeException("Can't install license when subject is null!");
+        }
+
+        if (cipher != null) {
+            this.cipher = cipher;
+        } else {
+            throw new RuntimeException("Can't install license when cipher is null!");
+        }
+
+        if (licensePath != null) {
+            File licenseFile = new File(licensePath);
+            if (licenseFile.exists()) {
+                this.licenseFile = licenseFile;
+            } else {
+                throw new RuntimeException("Can't install license when license file doesn't exist!");
+            }
+        } else {
+            throw new RuntimeException("Can't install license when license file is null!");
+        }
+
+        if (storePath != null) {
+            File keyStore = new File(storePath);
+            if (keyStore.exists()) {
+                this.storePath = storePath;
+            } else {
+                throw new RuntimeException("Can't install license when key store doesn't exist!");
+            }
+        } else {
+            throw new RuntimeException("Can't install license when key store is null!");
+        }
     }
 
     public String getSubject() {
         return subject;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public String getCipher() {
         return cipher;
-    }
-
-    public void setCipher(String cipher) {
-        this.cipher = cipher;
     }
 
     public File getLicenseFile() {
         return licenseFile;
     }
 
-    public void setLicenseFile(File licenseFile) {
-        this.licenseFile = licenseFile;
-    }
-
-    public File getStoreFile() {
-        return storeFile;
-    }
-
-    public void setStoreFile(File storeFile) {
-        this.storeFile = storeFile;
+    public String getStorePath() {
+        return storePath;
     }
 }
