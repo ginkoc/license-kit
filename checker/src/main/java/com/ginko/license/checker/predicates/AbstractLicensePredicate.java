@@ -41,7 +41,7 @@ public abstract class AbstractLicensePredicate implements LicensePredicate {
     }
 
     public CustomLicenseContent getLicenseContent() {
-        return LicenseContentHolder.getInstance().getContent();
+        return LicenseContentHolder.INSTANCE.getContent();
     }
 
     public PredicateError getError() {
