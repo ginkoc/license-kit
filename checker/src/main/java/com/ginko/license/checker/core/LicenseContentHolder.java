@@ -12,6 +12,7 @@ import java.io.File;
 import java.util.prefs.Preferences;
 
 /**
+ * license控制信息的持有对象，需要在系统启动时进行初始化
  * @author ginko
  * @date 8/27/19
  */
@@ -35,6 +36,10 @@ public class LicenseContentHolder {
         return INSTANCE;
     }
 
+    /**
+     * 安装license以获得控制信息
+     * TODO: 2020/1/3  应该抛出异常，在系统启动时若果未安装成功，则启动失败
+     */
     public void install() {
         assert subject != null;
         assert cipher != null;

@@ -69,11 +69,18 @@ public class LicenseHandler {
         return ticket;
     }
 
+    /**
+     * 通过前台传过来的ticket，找到指定的license提供下载
+     * @param ticket 创建license后返回的用于下载license的令牌
+     * @return 文件路径
+     * @throws CommandException 执行keytool命令失败时抛出的异常
+     * @throws IOException 文件操作过程中可能出现的异常
+     */
     public static File zipLicense(String ticket) throws CommandException, IOException {
         //checking ticket expire through redis
         String file = (String) RedisUtil.get(ticket);
         if (file == null) {
-            throw new UnifiedException(-1, "ticket has expired");
+            throw new UnifiedException(-1, "ticket doesn't exist or expired");
         }
 
         if (!new File(file).exists()) {
@@ -83,6 +90,10 @@ public class LicenseHandler {
         String cert = CommonUtils.getUniqueCertName("cert");
         String publicKeystore = CommonUtils.getUniquePubKeystoreName("publicKeystore");
 
+        // 这是一个中间过程，功能是将私钥库中的秘钥对所含有的证书导出到指定文件，为下一步导出公钥做准备
+        // 实际执行的命令类似于：
+        // keytool -exportcert -alias ginko -file /home/ginko/.license_manager/cert.cert
+        // -storepass abcd1234 -keystore /home/ginko/.license_manager/ginko.pks
         AbstractKeyToolCommand exportCertCommand = new KeyToolCommandBuilder(KeyToolCommandType.EXPORT_CERT)
                 .alias(ticket)
                 .file(cert)
@@ -91,6 +102,10 @@ public class LicenseHandler {
                 .build();
         exportCertCommand.execute();
 
+        // 将证书文件中的公钥导出到公钥库，license和公钥将一起交给用户，公钥用于解密license信息
+        // 实际执行的命令类似于：
+        // keytool -exportcert -alias ginko -file /home/ginko/.license_manager/cert.cert
+        // -storepass abcd1234 -keystore /home/ginko/.license_manager/ginko.pks
         AbstractKeyToolCommand importCertCommand = new KeyToolCommandBuilder(KeyToolCommandType.IMPORT_CERT)
                 .alias(ticket)
                 .file(cert)
@@ -106,6 +121,7 @@ public class LicenseHandler {
         File zipFile;
         try {
             String zipFileName = CommonUtils.getUniqueZipName("license");
+            // 将公钥库和license打包
             zipFile = CommonUtils.zipFiles(zipFileName, file, publicKeystore);
         } finally {
             CommonUtils.deleteFileIfExist(cert);

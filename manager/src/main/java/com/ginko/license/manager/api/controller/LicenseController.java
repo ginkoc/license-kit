@@ -5,7 +5,6 @@ import com.ginko.license.manager.api.restentity.ContentWithValue;
 import com.ginko.license.manager.api.restentity.LicenseDto;
 import com.ginko.license.manager.api.restentity.ResultEntity;
 import com.ginko.license.manager.api.restentity.ResultUtil;
-import com.ginko.license.manager.exception.CommandException;
 import com.ginko.license.manager.exception.LicenseValidateException;
 import com.ginko.license.manager.exception.UnifiedException;
 import com.ginko.license.manager.utils.CommonUtils;

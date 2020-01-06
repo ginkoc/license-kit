@@ -8,11 +8,17 @@ import java.util.Enumeration;
 import java.util.List;
 
 /**
+ * 硬件信息辅助工具
  * @author ginko
  * @date 8/28/19
  */
 public class HardwareInfoUtils {
 
+    /**
+     * 获得物理机所有的ip
+     * @return ip列表
+     * @throws SocketException 异常
+     */
     public static List<String> getIpAddress() throws SocketException {
         List<String> result = new ArrayList<String>();
         List<InetAddress> addresses = getAllInetAddress();
@@ -24,6 +30,11 @@ public class HardwareInfoUtils {
         return result;
     }
 
+    /**
+     * 获得物理机所有的mac地址
+     * @return mac地址列表
+     * @throws Exception 异常
+     */
     public static List<String> getMacAddresses() throws Exception {
         List<String> result = new ArrayList<String>();
         List<InetAddress> addresses = getAllInetAddress();

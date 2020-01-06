@@ -35,7 +35,7 @@ public class MacPredicate extends AbstractLicensePredicate {
         }
 
         for (String mac : macs) {
-            if (macLimit.isPresent() && macLimit.get().equalsIgnoreCase(mac)) {
+            if (macLimit.get().equalsIgnoreCase(mac)) {
                 return true;
             }
         }

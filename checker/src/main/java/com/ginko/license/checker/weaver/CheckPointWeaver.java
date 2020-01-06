@@ -14,6 +14,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 
 /**
+ * 一个切面，AspectJ会根据该切面进行织入
  * @author ginko
  * @date 8/28/19
  */
