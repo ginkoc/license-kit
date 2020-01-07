@@ -71,19 +71,19 @@ public enum LicenseContentHolder {
                           final String cipher,
                           final String licensePath,
                           final String storePath) {
-        if (subject != null) {
+        if (subject != null && subject.length() > 0) {
             this.subject = subject;
         } else {
             throw new RuntimeException("Can't install license when subject is null!");
         }
 
-        if (cipher != null) {
+        if (cipher != null && cipher.length() > 0) {
             this.cipher = cipher;
         } else {
             throw new RuntimeException("Can't install license when cipher is null!");
         }
 
-        if (licensePath != null) {
+        if (licensePath != null && licensePath.length() > 0) {
             File licenseFile = new File(licensePath);
             if (licenseFile.exists()) {
                 this.licenseFile = licenseFile;
@@ -94,7 +94,7 @@ public enum LicenseContentHolder {
             throw new RuntimeException("Can't install license when license file is null!");
         }
 
-        if (storePath != null) {
+        if (storePath != null && storePath.length() > 0) {
             File keyStore = new File(storePath);
             if (keyStore.exists()) {
                 this.storePath = storePath;
