@@ -4,6 +4,7 @@ import com.ginko.license.checker.annotations.CheckPoint;
 import com.ginko.license.checker.core.Checker;
 import com.ginko.license.checker.exception.CheckException;
 import com.ginko.license.checker.predicates.AbstractLicensePredicate;
+import com.ginko.license.checker.predicates.LicensePredicate;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -32,7 +33,7 @@ public class CheckPointWeaver {
             return;
         }
 
-        Class<? extends AbstractLicensePredicate>[] predicates = checkPoint.predicates();
+        Class<? extends LicensePredicate>[] predicates = checkPoint.predicates();
         Checker.check(predicates);
     }
 

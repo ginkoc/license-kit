@@ -11,4 +11,10 @@ public interface LicensePredicate {
      * @return 是否校验成功
      */
     boolean test();
+
+    /**
+     * 返回出现错误的原因
+     * @return 错误信息
+     */
+    String getErrorMessage();
 }

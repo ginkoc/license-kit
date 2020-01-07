@@ -1,6 +1,6 @@
 package com.ginko.license.checker.annotations;
 
-import com.ginko.license.checker.predicates.AbstractLicensePredicate;
+import com.ginko.license.checker.predicates.LicensePredicate;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -16,6 +16,5 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface CheckPoint {
 
-    // TODO: 2020/1/6 将AbstractLicensePredicate修改为LicensePredicate
-    Class<? extends AbstractLicensePredicate>[] predicates();
+    Class<? extends LicensePredicate>[] predicates();
 }

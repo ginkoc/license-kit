@@ -51,4 +51,9 @@ public abstract class AbstractLicensePredicate implements LicensePredicate {
     protected void setError(PredicateError error) {
         this.error = error;
     }
+
+    @Override
+    public String getErrorMessage() {
+        return getError().getMessage();
+    }
 }
