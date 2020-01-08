@@ -13,6 +13,7 @@ public interface LicensePredicate {
     boolean test();
 
     /**
+     * // TODO: 2020/1/8 有没有更合理的方式来指明错误原因
      * 返回出现错误的原因
      * @return 错误信息
      */

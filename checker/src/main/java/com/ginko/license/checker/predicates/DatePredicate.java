@@ -15,7 +15,6 @@ public class DatePredicate extends AbstractLicensePredicate {
 
     @Override
     public boolean test() {
-        log.info("Enter datePredicate");
         Date now = new Date();
         boolean isEarly = now.before(getLicenseEffectiveDate());
         boolean isExpired = now.after(getLicenseExpiredDate());
