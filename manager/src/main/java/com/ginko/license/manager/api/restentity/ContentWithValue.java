@@ -12,11 +12,11 @@ import javax.validation.constraints.NotBlank;
 @ApiModel(description = "证书实体对象")
 public class ContentWithValue {
 
-    @ApiModelProperty(value = "控制参数的键类型", example = "MAC")
+    @ApiModelProperty(value = "控制参数的键类型，该参数必须指定", example = "MAC")
     @NotBlank
     private String type;
 
-    @ApiModelProperty(value = "控制参数的键所对应的值", example = "00:0c:29:65:37:49")
+    @ApiModelProperty(value = "控制参数的键所对应的值，该参数必须指定", example = "00:0c:29:65:37:49")
     @NotBlank
     private String value;
 

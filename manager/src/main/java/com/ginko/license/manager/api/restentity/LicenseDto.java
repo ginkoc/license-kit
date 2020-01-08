@@ -17,14 +17,14 @@ import java.util.List;
 @ApiModel(description = "证书实体对象")
 public class LicenseDto {
 
-    @ApiModelProperty(value = "使用该证书的实体", example = "CN=Duke, OU=JavaSoft, O=Sun Microsystems, C=US")
+    @ApiModelProperty(value = "使用该证书的实体。该参数必须指定", example = "CN=Duke, OU=JavaSoft, O=Sun Microsystems, C=US")
     @NotBlank
     private String holder;
 
     @ApiModelProperty(value = "发行证书的实体", example = "CN=Duke, OU=JavaSoft, O=Sun Microsystems, C=US")
     private String issuer;
 
-    @ApiModelProperty(value = "License过期时间", example = "2020-7-7")
+    @ApiModelProperty(value = "License过期时间，该参数必须指定", example = "2020-7-7")
     @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date notAfter;
@@ -33,7 +33,7 @@ public class LicenseDto {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date notBefore;
 
-    @ApiModelProperty(value = "需要被许可的实体，可以是一款产品的名字或者软件的代号", example = "license-kit")
+    @ApiModelProperty(value = "需要被许可的实体，可以是一款产品的名字或者软件的代号，该参数必须指定", example = "license-kit")
     @NotBlank
     private String subject;
 
