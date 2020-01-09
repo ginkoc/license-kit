@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author ginko
  * @date 9/6/19
@@ -17,7 +20,9 @@ public class ExampleController {
     @GetMapping(value = "/test")
     @CheckPoint(predicates = {DatePredicate.class, MyPredicate.class})
     @ResponseBody
-    public String testingChecker() {
-        return "done";
+    public Map<String, String> testingChecker() {
+        Map<String, String> map = new HashMap<>();
+        map.put("result", "all predicates pass");
+        return map;
     }
 }

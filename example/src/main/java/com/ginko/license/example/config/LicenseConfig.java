@@ -6,11 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
-import org.springframework.util.ResourceUtils;
 
 import javax.servlet.ServletContextListener;
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.util.Objects;
 
 /**
  * @author ginko
@@ -26,14 +24,9 @@ public class LicenseConfig {
         ServletListenerRegistrationBean<ServletContextListener>
                 servletListenerRegistrationBean = new ServletListenerRegistrationBean<>();
 
-        try {
-            String properties = LicenseConfig.class.getClassLoader().getResource("license.properties").getFile();
-            log.info("config path:" + properties);
-            servletListenerRegistrationBean.setListener(new LicenseInitHelper(properties));
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-
+        String properties = Objects.requireNonNull(LicenseConfig.class.getClassLoader().getResource("license.properties")).getFile();
+        log.info("config path:" + properties);
+        servletListenerRegistrationBean.setListener(new LicenseInitHelper(properties));
         return servletListenerRegistrationBean;
     }
 }
