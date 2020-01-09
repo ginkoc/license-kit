@@ -33,7 +33,7 @@ public abstract class AbstractLicensePredicate implements LicensePredicate {
     }
 
     public Date getLicenseEffectiveDate() {
-        return getLicenseContent().getNotBefore();
+        return getLicenseContent().getEffectiveDate();
     }
 
     public boolean isTypePresence(LicenseContentType type) {

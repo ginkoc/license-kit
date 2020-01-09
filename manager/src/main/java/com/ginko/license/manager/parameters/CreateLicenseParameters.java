@@ -92,7 +92,6 @@ public class CreateLicenseParameters {
         content.setIssuer(new X500Principal(Constants.DEFAULT_ISSUER));
         Date date = new Date();
         content.setIssued(date);
-        content.setNotBefore(date);
         content.setNotAfter(Date.from(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).plusYears(10)
                 .atZone(ZoneId.systemDefault()).toInstant()));
         return content;

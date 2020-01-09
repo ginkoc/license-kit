@@ -151,7 +151,7 @@ public class LicenseHandler {
         // 证书发行日期
         content.setIssued(date);
         // 证书最早能使用的时间
-        content.setNotBefore(dto.getNotBefore());
+        content.setEffectiveDate(dto.getNotBefore());
         // 证书过期时间
         content.setNotAfter(dto.getNotAfter());
 
