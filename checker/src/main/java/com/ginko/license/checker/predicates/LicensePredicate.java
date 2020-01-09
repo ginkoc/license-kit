@@ -3,6 +3,7 @@ package com.ginko.license.checker.predicates;
 /**
  * @author ginko
  * @date 8/28/19
+ * TODO: 2020/1/9 完善几个原生的predicate
  */
 public interface LicensePredicate {
 
@@ -13,7 +14,7 @@ public interface LicensePredicate {
     boolean test();
 
     /**
-     * // TODO: 2020/1/8 有没有更合理的方式来指明错误原因
+     * TODO: 2020/1/8 有没有更合理的方式来指明错误原因
      * 返回出现错误的原因
      * @return 错误信息
      */

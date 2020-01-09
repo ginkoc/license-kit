@@ -18,6 +18,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimerTask;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -155,12 +157,14 @@ public class LicenseHandler {
         // 证书过期时间
         content.setNotAfter(dto.getNotAfter());
 
-        // 设置额外的属性
+        // 设置额外的控制参数
         if (dto.getContents() != null && !dto.getContents().isEmpty()) {
+            final Map<LicenseContentType, String> valMap = new HashMap<>();
             dto.getContents().forEach(cwv -> {
                 LicenseContentType contentType = LicenseContentType.valueOf(cwv.getType());
-                content.setContentValue(contentType, cwv.getValue());
+                valMap.put(contentType, cwv.getValue());
             });
+            content.setContentValueMap(valMap);
         }
         parameters.setLicenseContent(content);
         return parameters;

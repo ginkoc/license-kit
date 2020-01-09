@@ -2,8 +2,8 @@ package com.ginko.license.common.custom;
 
 import de.schlichtherle.license.LicenseContent;
 
+import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -22,7 +22,10 @@ public class CustomLicenseContent extends LicenseContent {
      * 对除了基本信息以外的控制参数进行封装
      * 但是key值必须是{@link LicenseContentType}类型
      */
-    private final Map<LicenseContentType, String> contentValueMap = new HashMap<>();
+    private Map<LicenseContentType, String> contentValueMap;
+
+    /**当额外的控制参数为空时，返回的map对象*/
+    private static final Map<LicenseContentType, String> EMPTY_MAP = Collections.emptyMap();
 
     /**
      * 由于truelicense不支持证书最早可使用的时间晚于证书创建的时间
@@ -31,11 +34,7 @@ public class CustomLicenseContent extends LicenseContent {
     private Date effectiveDate;
 
     public Optional<String> getContentValue(LicenseContentType key) {
-        return Optional.ofNullable(contentValueMap.get(key));
-    }
-
-    public void setContentValue(LicenseContentType key, String val) {
-        contentValueMap.put(key, val);
+        return Optional.ofNullable(getContentValueMap().get(key));
     }
 
     public Set<LicenseContentType> getContentTypes() {
@@ -52,13 +51,24 @@ public class CustomLicenseContent extends LicenseContent {
         firePropertyChange("effectiveDate", clone(oldEffectiveDate), clone(effectiveDate));
     }
 
+    public Map<LicenseContentType, String> getContentValueMap() {
+        return contentValueMap == null ? EMPTY_MAP : contentValueMap;
+    }
+
+    public void setContentValueMap(Map<LicenseContentType, String> contentValueMap) {
+        if (this.contentValueMap != null) {
+            throw new UnsupportedOperationException("Can't set control contents multiple times!");
+        }
+        this.contentValueMap = contentValueMap;
+    }
+
     /**
      * 该参数用effectiveDate代替，所以废弃
      */
     @Deprecated
     @Override
     public Date getNotBefore() {
-        return ORIGIN_DATE;
+        return super.getNotBefore() == null ? ORIGIN_DATE : super.getNotBefore();
     }
 
     /**
