@@ -22,11 +22,11 @@ manager是一个后台项目，基于`truelicense`、`redis`以及`java keytool`
 
 ### 项目配置
 
-目前项目的逻辑比较简单，项目的可配置项并不多。只要在`application.yml`文件中配置项目端口号以及redis相关配置即可，默认配置如下：
+目前项目的逻辑比较简单，项目的可配置项并不多。只要在`application.yml`文件中配置项目端口号以及redis相关配置即可，配置如下：
 
 ```yaml
 server:
-	port: 8686
+    port: 8686
 
 spring:
     redis:
@@ -41,9 +41,11 @@ spring:
           min-idle: 0
 ```
 
+注意：redis的password属性要与实际的redis密码相同
+
 ### 运行项目
 
-由于该项目依赖于common项目，所以要运行该项目前，需要先将common包安装到本地maven仓库，在common目录下执行：
+由于该项目依赖于common项目，所以要运行该项目前，需要先将common包安装到本地maven仓库，在common项目下（common目录）下执行：
 
 ```shell
 mvn clean install
@@ -75,7 +77,19 @@ mvn spring-boot:run -P debug
   java -jar license-manager-0.0.1-SNAPSHOT.jar
 ```
 
+### 查看服务接口
 
+运行该项目以后，可以在swagger界面查看服务接口，地址如下：
+
+```url
+ip:port/swagger-ui.html
+```
+
+在swagger界面可以看到，接口调用的url以及所需要的参数，并且对参数进行了说明。
+
+在创建license时，需要注意指定的`subject`参数，代表需要被许可的实体（可以是一款产品的名字或者软件的代号），在使用license时需要用到，因此需要记录你指定`subject`参数的值。
+
+调用创建license接口后会返回一个uuid作为下载令牌，用于下载指定的license。令牌的有效时间为5分钟，5分钟以后令牌将会失效，令牌失效一分钟以后服务端会删除license文件。
 
 
 

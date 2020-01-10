@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
 /**
  * @author ginko
  * @date 8/3/19
+ * TODO: 2020/1/10 添加获得控制参数及其正则的接口
  */
 @Controller
 @RequestMapping(value = "/licenses")
