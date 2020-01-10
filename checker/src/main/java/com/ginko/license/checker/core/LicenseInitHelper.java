@@ -7,19 +7,20 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 /**
  * 该对象用于帮助API使用者初始化license控制信息
+ *
  * @author ginko
  * @date 8/27/19
  */
-public final class LicenseInitHelper  implements ServletContextListener {
+public final class LicenseInitHelper implements ServletContextListener {
 
     private static final Logger log = LoggerFactory.getLogger(LicenseInitHelper.class);
+    private static final String JAR_PREFIX = "classpath:";
 
     private String propertiesFilePath = null;
     private String subject;
@@ -57,19 +58,31 @@ public final class LicenseInitHelper  implements ServletContextListener {
      * 根据配置的内容获得{@link LicenseContentHolder}初始化需要的参数
      */
     private void loadPropertiesAndSetHolderField() {
+        boolean maybeFileInJar = false;
+        // 通过判断properties文件路径是否以'classpath:'开头，判断文件是否在classes目录下
+        // 以'classpath:'开头的文件根路径为classes目录
+        if (propertiesFilePath.startsWith(JAR_PREFIX)) {
+            propertiesFilePath = propertiesFilePath.substring(JAR_PREFIX.length());
+            maybeFileInJar = true;
+        }
+
+        log.info("Properties filepath:" + propertiesFilePath);
         File propertiesFile = new File(propertiesFilePath);
-        if (!propertiesFile.exists()) {
+        if (!maybeFileInJar && !propertiesFile.exists()) {
             throw new RuntimeException("Properties file doesn't exist.");
         }
 
         Properties properties = new Properties();
-        try {
-            InputStream in = new FileInputStream(propertiesFile);
+        try (InputStream in = maybeFileInJar ?
+                getClass().getClassLoader().getResourceAsStream(propertiesFilePath) : new FileInputStream(propertiesFile)) {
             properties.load(in);
         } catch (IOException e) {
             log.error("Failed to install license due to {}", e.getMessage());
             log.debug("Exception", e);
             throw new RuntimeException("Failed to load properties due to " + e);
+        } catch (NullPointerException e) {
+            log.debug("Exception", e);
+            throw new RuntimeException("Properties file doesn't exist.");
         }
 
         subject = properties.getProperty("subject");

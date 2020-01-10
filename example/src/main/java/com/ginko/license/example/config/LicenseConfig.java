@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContextListener;
-import java.util.Objects;
 
 /**
  * @author ginko
@@ -24,7 +23,7 @@ public class LicenseConfig {
         ServletListenerRegistrationBean<ServletContextListener>
                 servletListenerRegistrationBean = new ServletListenerRegistrationBean<>();
 
-        String properties = Objects.requireNonNull(LicenseConfig.class.getClassLoader().getResource("license.properties")).getFile();
+        String properties = "classpath:license.properties";
         log.info("config path:" + properties);
         servletListenerRegistrationBean.setListener(new LicenseInitHelper(properties));
         return servletListenerRegistrationBean;
