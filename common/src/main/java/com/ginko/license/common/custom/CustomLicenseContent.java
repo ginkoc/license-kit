@@ -24,7 +24,9 @@ public class CustomLicenseContent extends LicenseContent {
      */
     private Map<LicenseContentType, String> contentValueMap;
 
-    /**当额外的控制参数为空时，返回的map对象*/
+    /**
+     * 当额外的控制参数为空时，返回的map对象
+     */
     private static final Map<LicenseContentType, String> EMPTY_MAP = Collections.emptyMap();
 
     /**

@@ -6,13 +6,19 @@ package com.ginko.license.manager.api.restentity;
  */
 public class ResultEntity<T> {
 
-    /**结果码， 不为0则操作失败*/
+    /**
+     * 结果码， 不为0则操作失败
+     */
     private int code;
 
-    /**信息*/
+    /**
+     * 信息
+     */
     private String message;
 
-    /**返回的数据，可以为空*/
+    /**
+     * 返回的数据，可以为空
+     */
     private T data;
 
     public ResultEntity() {

@@ -84,6 +84,7 @@ public class LicenseController {
 
     /**
      * 校验license时间区间以及控制参数的是否正确
+     *
      * @param dto 前台传入的license对象
      */
     private void validate(LicenseDto dto) {

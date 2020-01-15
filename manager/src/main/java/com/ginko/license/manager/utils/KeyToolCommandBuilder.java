@@ -49,6 +49,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定keytool命令的秘钥别名参数
+     *
      * @param alias 秘钥在秘钥库中的别名
      * @return this
      */
@@ -59,6 +60,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定keytool命令的签名算法参数
+     *
      * @param sigalg 签名算法
      * @return this
      */
@@ -69,6 +71,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定keytool命令的加密算法参数
+     *
      * @param keyalg 加密算法
      * @return this
      */
@@ -79,6 +82,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定keytool命令的秘钥大小参数
+     *
      * @param keysize 秘钥大小
      * @return this
      */
@@ -89,6 +93,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定keytool命令的秘钥有效天数参数
+     *
      * @param days 秘钥有效天数
      * @return this
      */
@@ -100,6 +105,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定keytool命令的秘钥密码参数
+     *
      * @param keypass 秘钥密码
      * @return this
      */
@@ -110,6 +116,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定keytool命令的秘钥库参数
+     *
      * @param keystore 秘钥库
      * @return this
      */
@@ -120,6 +127,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定keytool命令的秘钥库类型参数
+     *
      * @param storetype 秘钥库类型
      * @return this
      */
@@ -130,6 +138,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定keytool命令的秘钥库密码参数
+     *
      * @param storepass 秘钥库密码
      * @return this
      */
@@ -140,6 +149,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定keytool命令的dname参数
+     *
      * @param dname dname
      * @return this
      */
@@ -150,6 +160,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定keytool命令的文件名参数
+     *
      * @param file 文件名
      * @return this
      */
@@ -160,6 +171,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定执行keytool命令时不进行提示
+     *
      * @return this
      */
     public KeyToolCommandBuilder noprompt() {
@@ -169,6 +181,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定keytool命令的新密码参数
+     *
      * @param newPass 新密码
      * @return this
      */
@@ -179,6 +192,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定执行keytool命令时使用默认的加密算法
+     *
      * @return this
      */
     public KeyToolCommandBuilder defaultKeyalg() {
@@ -187,6 +201,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定执行keytool命令时使用默认秘钥大小
+     *
      * @return this
      */
     public KeyToolCommandBuilder defaultKeysize() {
@@ -195,6 +210,7 @@ public class KeyToolCommandBuilder {
 
     /**
      * 指定执行keytool命令时使用默认的签名算法
+     *
      * @return this
      */
     public KeyToolCommandBuilder defaultSigalg() {

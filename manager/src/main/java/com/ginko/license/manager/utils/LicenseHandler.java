@@ -35,6 +35,7 @@ public class LicenseHandler {
     /**
      * 生成license文件和获得下载license的ticket，ticket有效时间为300s（5分钟）
      * 当ticket失效1分钟以后定时任务会将license文件删除
+     *
      * @param dto 生成license需要的参数对象
      * @return 用于下载license的ticket
      * @throws CommandException 执行生成license命令时出错抛出的异常
@@ -73,10 +74,11 @@ public class LicenseHandler {
 
     /**
      * 通过前台传过来的ticket，找到指定的license提供下载
+     *
      * @param ticket 创建license后返回的用于下载license的令牌
      * @return 文件路径
      * @throws CommandException 执行keytool命令失败时抛出的异常
-     * @throws IOException 文件操作过程中可能出现的异常
+     * @throws IOException      文件操作过程中可能出现的异常
      */
     public static File zipLicense(String ticket) throws CommandException, IOException {
         //checking ticket expire through redis
@@ -172,8 +174,9 @@ public class LicenseHandler {
 
     /**
      * 将ticket存入redis缓存中，并且在ticket过期后删除license文件
-     * @param ticket 要缓存的票据
-     * @param licFile license文件路径
+     *
+     * @param ticket    要缓存的票据
+     * @param licFile   license文件路径
      * @param ticketTTL ticket的有效时间
      * @param delayTime 在ticket过期后延迟删除license的时间
      */

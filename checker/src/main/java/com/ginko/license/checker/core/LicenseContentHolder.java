@@ -15,12 +15,13 @@ import java.util.prefs.Preferences;
 
 /**
  * license控制信息的持有对象，用枚举类实现的单例，需要在系统启动时进行初始化
+ *
  * @author ginko
  * @date 8/27/19
  */
 public enum LicenseContentHolder {
     /**
-     *枚举单例对象
+     * 枚举单例对象
      */
     INSTANCE;
 

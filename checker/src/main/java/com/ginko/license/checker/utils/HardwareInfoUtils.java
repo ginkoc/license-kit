@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 硬件信息辅助工具
+ *
  * @author ginko
  * @date 8/28/19
  */
@@ -16,6 +17,7 @@ public class HardwareInfoUtils {
 
     /**
      * 获得物理机所有的ip
+     *
      * @return ip列表
      * @throws SocketException 异常
      */
@@ -32,6 +34,7 @@ public class HardwareInfoUtils {
 
     /**
      * 获得物理机所有的mac地址
+     *
      * @return mac地址列表
      * @throws Exception 异常
      */
@@ -60,7 +63,7 @@ public class HardwareInfoUtils {
                 InetAddress address = addresses.nextElement();
 
                 //排除LoopbackAddress、SiteLocalAddress、LinkLocalAddress、MulticastAddress类型的IP地址
-                if(!address.isLoopbackAddress() && !address.isLinkLocalAddress()
+                if (!address.isLoopbackAddress() && !address.isLinkLocalAddress()
                         && !address.isMulticastAddress()) {
                     results.add(address);
                 }
@@ -72,19 +75,20 @@ public class HardwareInfoUtils {
 
     private static String getMacByInetAddress(InetAddress address) throws SocketException {
         byte[] mac = NetworkInterface.getByInetAddress(address).getHardwareAddress();
-        StringBuilder sb = new StringBuilder();
 
-        for(int i=0; i<mac.length; i++){
-            if(i != 0) {
+        StringBuilder sb = new StringBuilder(3 * mac.length);
+
+        for (int i = 0; i < mac.length; i++) {
+            if (i != 0) {
                 sb.append(":");
             }
 
             //将十六进制byte转化为字符串
             String temp = Integer.toHexString(mac[i] & 0xff);
-            if(temp.length() == 1){
+            if (temp.length() == 1) {
                 sb.append("0");
                 sb.append(temp);
-            }else{
+            } else {
                 sb.append(temp);
             }
         }

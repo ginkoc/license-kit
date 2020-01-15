@@ -15,6 +15,7 @@ public class RedisUtil {
 
     /**
      * 获取key过期时间
+     *
      * @param key 键不能为null
      * @return 时间(秒) 返回0代表为永久有效
      */
@@ -26,8 +27,9 @@ public class RedisUtil {
 
     /**
      * 普通缓存放入
-     * @param key 键
-     * @param value 值
+     *
+     * @param key              键
+     * @param value            值
      * @param timeoutInSeconds 时间(秒) time要大于0 如果time小于等于0 将设置无限期
      * @return true成功 false失败
      */
@@ -39,6 +41,7 @@ public class RedisUtil {
 
     /**
      * 普通缓存获取
+     *
      * @param key 键
      * @return 值
      */

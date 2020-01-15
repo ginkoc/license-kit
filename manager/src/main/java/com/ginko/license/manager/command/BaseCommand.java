@@ -62,6 +62,7 @@ public abstract class BaseCommand implements Executable {
 
     /**
      * 命令回滚的实际逻辑
+     *
      * @return 是否回滚成功
      */
     protected abstract boolean executeRollback();

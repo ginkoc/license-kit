@@ -29,6 +29,7 @@ public class CommonUtils {
 
     /**
      * 将{@link Date}对象转换为{@link LocalDate}
+     *
      * @param date Date对象
      * @return 转换后的LocalDate
      */
@@ -38,6 +39,7 @@ public class CommonUtils {
 
     /**
      * 计算两个{@link Date}对象之间的天数差
+     *
      * @return 天数差
      */
     public static long daysBetween(Date left, Date right) {
@@ -47,6 +49,7 @@ public class CommonUtils {
 
     /**
      * 计算两个{@link LocalDate}对象之间的天数差
+     *
      * @return 天数差
      */
     public static long daysBetween(LocalDate left, LocalDate right) {
@@ -76,7 +79,7 @@ public class CommonUtils {
         return Constants.LICENSE_ROOT + Constants.SEPARATOR + fileName + "_" + Long.toString(n) + suffix;
     }
 
-    public static boolean deleteFileIfExist(String filePath){
+    public static boolean deleteFileIfExist(String filePath) {
         File file = new File(filePath);
         if (file.exists()) {
             return file.delete();
@@ -87,18 +90,19 @@ public class CommonUtils {
 
     /**
      * 将指定文件打包为zip文件，不能递归打包
+     *
      * @param destFileName 生成的zip文件名
-     * @param srcFiles 要打包的文件
+     * @param srcFiles     要打包的文件
      * @return 打包完成后目标文件对象
      * @throws IOException IO异常
      */
-    public static File zipFiles(String destFileName, String ...srcFiles) throws IOException {
+    public static File zipFiles(String destFileName, String... srcFiles) throws IOException {
         if (srcFiles == null) {
             throw new IllegalArgumentException("Given null file names");
         }
 
         File[] files = new File[srcFiles.length];
-        for (int i=0, len= srcFiles.length; i<len; i++) {
+        for (int i = 0, len = srcFiles.length; i < len; i++) {
             File file = new File(srcFiles[i]);
 
             if (!file.exists()) {
@@ -113,8 +117,8 @@ public class CommonUtils {
         }
 
         File zipFile = new File(destFileName);
-        try(ZipOutputStream  zos
-                    = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(zipFile)))) {
+        try (ZipOutputStream zos
+                     = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(zipFile)))) {
             for (File f : files) {
                 compressFile(zos, f);
             }
@@ -128,8 +132,8 @@ public class CommonUtils {
     }
 
     public static void writeBytes(OutputStream os, File srcFile, boolean closeStream) throws IOException {
-        try(BufferedInputStream bis
-                    = new BufferedInputStream(new FileInputStream(srcFile))) {
+        try (BufferedInputStream bis
+                     = new BufferedInputStream(new FileInputStream(srcFile))) {
             int length;
             while ((length = bis.read()) != -1) {
                 os.write(length);

@@ -4,7 +4,7 @@ package com.ginko.license.manager.exception;
  * @author ginko
  * @date 7/21/19
  */
-public class CommandException extends Exception{
+public class CommandException extends Exception {
 
     private static final long serialVersionUID = 5686564574054398702L;
     private String command;

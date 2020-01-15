@@ -39,7 +39,7 @@ public final class SpringBeanUtil implements ApplicationContextAware {
      * @return bean
      * @throws org.springframework.beans.BeansException
      */
-    public static <T> T getBean(Class<T> clz){
+    public static <T> T getBean(Class<T> clz) {
         return applicationContext.getBean(clz);
     }
 }

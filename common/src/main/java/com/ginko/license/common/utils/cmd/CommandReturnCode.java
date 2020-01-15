@@ -6,10 +6,14 @@ package com.ginko.license.common.utils.cmd;
  */
 public enum CommandReturnCode {
 
-    /**indicate command execute successfully*/
+    /**
+     * indicate command execute successfully
+     */
     SUCCESS(0),
 
-    /**indicate command execute failed*/
+    /**
+     * indicate command execute failed
+     */
     FAIL(1);
 
     private final int code;
