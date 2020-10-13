@@ -21,7 +21,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
 
         <truelicense.version>1.32</truelicense.version>
-        <junit.version>4.11</junit.version>
+        <junit.version>4.13.1</junit.version>
         <guava.version>28.0-jre</guava.version>
         <spring-boot.version>2.1.3.RELEASE</spring-boot.version>
         <springfox.swagger2.version>2.9.2</springfox.swagger2.version>
